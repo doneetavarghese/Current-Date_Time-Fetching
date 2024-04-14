@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>date and time</title>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+    <!-- css start -->
+   <style>
+    body{
+        background-image: url(./bg1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+   </style>
+<!--  end -->
+
+<div class="row">
+    <h1 style="text-align: center;margin-top: 10px;font-size:50px;font-weight: bold;"> <span style="color: darkcyan;">DATE-TIME</span> <span style="color:lightpink">-FLOWHUB</span></h1>
+    <div class="col-lg-4"></div>
+    
+        <div style="border-radius: 10px,10px,10px;margin-top:80px;" class="col-lg-4 ">
+            <div  class="card" style="background-color:rgba(32, 178, 171, 0.598);border-radius: 20px,20px;box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;">
+                <div class="card-body ">
+                    <h2 style="font-weight: bold;color: aliceblue;text-align: center;">Current Date-Time App</h2>
+                    <!-- <input  id="movie_name" type="text" class="form-control" placeholder="Enter Movie Name" aria-label="Username"> <br> -->
+                    <select name="" id="country" style="height: 30px;width: 470px;border-color: lightpink;" class="mb-4 mt-2">
+                        <option value="" hidden>Select the Country/Place</option>
+                        </select> <br>
+
+                    <button onclick="searchData()"  type="button" class="btn btn-outline-success container text-center "> <span style="color: azure;">Submit</span></button>
+                    <div clas="col-lg-3" id="result"></div>
+                 </div>
+    <div class="col-lg-3"></div>
+
+</div>
+
+<!-- JAVA SCRIPT -->
+<script>
+ fetch('https://worldtimeapi.org/api/timezone')
+        .then(res => res.json())
+        .then(data => {
+            function displayTimezones(timezones) {
+                const selectElement = document.getElementById('country');
+                timezones.forEach(timezone => {
+                    const option = document.createElement('option');
+                    option.value = timezone;
+                    option.textContent = timezone;
+                    selectElement.appendChild(option);
+                });
+            }
+            displayTimezones(data);
+        })
+        // .catch(error => alert("Failed to fetch timezones"));
+    
+
+        function searchData() {
+            const selectedTimezone = document.getElementById('country').value;
+            fetch(`https://worldtimeapi.org/api/timezone/${selectedTimezone}`)
+            .then(res => res.json())
+            .then(data=>display(data))}
+        
+        function display(data){
+            result.innerHTML=""
+          let  htmldata=`
+            <div class="movie-card">
+                         <div class="card-body">
+                            <p class="card-text" style="color:white;font-weight: bold;">TimeZone: ${data.timezone}</p>
+                              <p class="card-text" style="color:white;font-weight: bold;">DateTime: ${data.datetime}</p>
+                              <p class="card-text" style="color:white;font-weight: bold;">Day of Week: ${data.day_of_week}</p>
+                              <p class="card-text" style="color:white;font-weight: bold;">Day of Year: ${data.day_of_year}</p>
+                              <p class="card-text" style="color:white; font-weight: bold;">Week Number: ${data.week_number}</p>
+                      </div>
+                    </div>`
+                    result.innerHTML+=htmldata
+        }
+        
+    </script>
+</body>
+</html>
+
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+
